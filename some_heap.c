@@ -28,7 +28,7 @@ unsigned int heap_right_child(unsigned int index) { return 2 * index + 2; }
 
 unsigned int heap_level(unsigned int index) {
   // Every level increases when you achieve powers of 2
-  // 2^k - 1 < index < 2^(k + 1) - 1 (k is level)
+  // 2^k - 1 <= index < 2^(k + 1) - 1 (k is level)
   // log(n - 1) -1;
   return floor(log2(index + 1));
 }
@@ -42,23 +42,32 @@ void heap_print(heap_t *heap) {
 }
 
 void heap_swap(heap_t *heap, int index1, int index2) {
-    printf("Swapping\n");
     heap_node_t temp = heap->data[index1];
     heap->data[index1] = heap->data[index2];
-    heap->data[index2] = heap->data[index1];
+    heap->data[index2] = temp;
 }
 
 void heap_bubble_up(heap_t *heap, int index) {
-  // unsigned int parent = heap_parent(index);
-  // if(heap->data[parent].value > heap->data[index].value) {
-  //   printf("Bubble up\n");
-  //   heap_swap(heap, parent, index);
-  // }
+  if(index == 0) { return; } // base case if index is root
 
-  // heap_bubble_up(heap, parent);
+  unsigned int parent = heap_parent(index);
+  if(heap->data[parent].key > heap->data[index].key) {
+    printf("Bubble up\n");
+    heap_swap(heap, parent, index);
+    heap_print(heap);
+  }
+
+  heap_bubble_up(heap, parent);
 }
 
 void heap_bubble_down(heap_t *heap, int index) {
+  // Check if parent has a child (left or right)
+  // If its the last node in the heap
+  // which heap is smaller most likely to maintain min heap
+  unsigned int left = heap_left_child(index);
+  unsigned int right = heap_right_child(index);
+  
+  
 }
 
 void heap_insert(heap_t *heap, heap_key_t key, heap_value_t data) {
