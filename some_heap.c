@@ -52,22 +52,28 @@ void heap_bubble_up(heap_t *heap, int index) {
 
   unsigned int parent = heap_parent(index);
   if(heap->data[parent].key > heap->data[index].key) {
-    printf("Bubble up\n");
     heap_swap(heap, parent, index);
-    heap_print(heap);
   }
 
   heap_bubble_up(heap, parent);
 }
 
-void heap_bubble_down(heap_t *heap, int index) {
+void heap_bubble_down(heap_t *heap, int index) { 
   // Check if parent has a child (left or right)
   // If its the last node in the heap
   // which heap is smaller most likely to maintain min heap
   unsigned int left = heap_left_child(index);
   unsigned int right = heap_right_child(index);
-  
-  
+  unsigned int smallest = index;
+
+  if(left >= heap_size(heap)) return; // No children
+
+  if(heap->data[left].key < heap->data[smallest].key) smallest = left;
+  if(right < heap_size(heap) && heap->data[right].key < heap->data[smallest].key) smallest = right;
+  if(smallest != index) {
+    heap_swap(heap, index, smallest);
+    heap_bubble_down(heap, smallest);
+  }
 }
 
 void heap_insert(heap_t *heap, heap_key_t key, heap_value_t data) {
