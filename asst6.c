@@ -30,6 +30,6 @@ void test_heap(void) {
 }
 int main(int argc, char *argv[]) {
     srand(time(NULL));
-
+    printf("Output:\n");
     test_heap();
 }
