@@ -9,3 +9,6 @@ link:
 
 debug:
 	gcc -g some_heap.c asst6.c -o debug.exe
+
+output:
+	bash output.sh
